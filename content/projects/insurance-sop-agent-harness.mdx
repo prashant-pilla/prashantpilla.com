@@ -1,0 +1,31 @@
+---
+title: Insurance Claims SOP Agent
+slug: insurance-sop-agent-harness
+summary: A conversational insurance-claims agent where a deterministic controller enforces the procedure and the LLM only extracts and phrases.
+role: Solo build
+year: 2026
+stack:
+  - Python 3.12
+  - FastAPI
+  - OpenAI / Anthropic APIs
+  - Docker
+  - pytest
+links:
+  github: https://github.com/prashant-pilla/insurance-sop-agent-harness
+featured: true
+order: 5
+---
+
+## Problem
+
+Support agents built on an LLM have to follow a fixed procedure exactly (verify identity with three factors before saying anything about a claim, resolve which claim, answer only from the record, ask before emailing) and still talk like a person. Putting the procedure in the prompt makes it negotiable: a caller can argue, inject, or wear the model down.
+
+## What I built
+
+Here the procedure is Python. A controller owns phase order (`VERIFY_ID` → `RESOLVE_INTENT` → `PROCESS_CASE` → `POST_PROCESS` → `CLOSED`, with `HUMAN_HANDOFF` reachable from anywhere), the three-of-five-factor identity gate, cross-phase memory, scope, and escalation rules. The model does two narrow jobs per turn: extract structured data from the caller's message, and phrase a reply from a directive the controller writes that lists only the facts it may use and the question it must ask. Before verification the directive carries no claim facts, so there is nothing to leak, and because only values matched against the records advance the gate, the model cannot be talked past it.
+
+Only the extractor sees raw PII; the stored transcript, model history, traces, and email drafts use `[EMAIL]`, `[PHONE]`, `[DATE]`, `[ID4]` placeholders. Representatives are supported through simulated policyholder consent. A model or provider failure produces a templated reply with state unchanged. It ships as a FastAPI service with a chat UI and a live SOP State panel, runs in Docker, and comes with 308 offline tests against a scripted fake model plus a live runner that replays thirteen conversations against a real one.
+
+## Outcome
+
+A reference harness for putting an LLM inside a procedure it cannot renegotiate. Shipped September 2026.

@@ -1,0 +1,36 @@
+---
+title: Gopher Drone Sim
+slug: gopher-drone-sim
+summary: 3D campus drone delivery simulation. A C++ engine with priority queues, weather, and leader/helper handoff talks to a Three.js frontend over WebSockets.
+role: Team of four; systems and simulation engineering
+year: 2025
+stack:
+  - C++
+  - libwebsockets
+  - Make
+  - TypeScript
+  - Three.js
+  - Vite
+  - Docker
+links:
+  github: https://github.com/prashant-pilla/gopher-drone-sim
+  video: https://youtu.be/94SR9GqrnaE
+featured: true
+order: 3
+---
+
+## Problem
+
+Autonomous delivery is a scheduling and resilience problem before it is a flying problem. We wanted a simulation where you could schedule packages across a real campus map, change priorities mid-flight, watch batteries and weather interfere, and export the numbers.
+
+## What I built
+
+The C++ backend owns the world: entities, routing strategies, package queues, a shared wind field, and the multi-drone handoff protocol. The browser is a Three.js view and control panel, kept in sync over a WebSocket.
+
+A few systems do the interesting work. Packages carry a shipping priority (Expedited, Standard, No Rush) that reorders the queue until a drone commits. Routing runs A*, Dijkstra, BFS, or DFS over an OpenStreetMap graph of the University of Minnesota campus. When a leader drone's battery drops below 20% it publishes a handoff request and the nearest idle helper takes the package while the leader recharges. Weather is a single wind vector every drone reads, with damage layered on via a decorator so the base drone class stays untouched. A process-wide data manager collects distance and delivery counts for CSV export.
+
+Entities are created through factories so new types plug in without rewriting the sim loop. The whole thing ships as a Docker image.
+
+## Outcome
+
+Built with Xander Hill, Casey Paulson, and Ryan Hale as a systems project at the University of Minnesota; this is the maintained personal copy. There is a demo video and a public Docker image (`prashantpilla/gopher-drone-sim`).

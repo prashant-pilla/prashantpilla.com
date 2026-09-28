@@ -1,0 +1,31 @@
+---
+title: Citework
+slug: citework
+summary: Grounded investment-committee memos. The model extracts, Python does the math, and a human approves before a sentence of prose exists.
+role: Solo build
+year: 2026
+stack:
+  - Python 3.12
+  - Anthropic API
+  - Streamlit
+  - Decimal arithmetic
+  - unittest
+links:
+  github: https://github.com/prashant-pilla/citework
+featured: true
+order: 4
+---
+
+## Problem
+
+Language models will invent a leverage multiple if you let them do the arithmetic. An investment committee cannot act on a memo where the numbers might be fiction and the quotes might be paraphrases.
+
+## What I built
+
+Citework turns a folder of deal documents into a one-page credit memo with a paper trail. The pipeline is two model calls with Python in between. Step one extracts named figures, each with a source file and a verbatim quote, and does no arithmetic. Python then verifies that every quote actually appears in the named file (whitespace folded, paraphrases fail, a `2` inside `$52M` does not count) and computes net debt, leverage, ARR multiple, and NRR in `Decimal`; a non-positive denominator is N/M, never a negative multiple. Assumptions, conflicts, gaps, and the verified numbers are written to disk before a human gate. Only after approval does step two write prose, and it is handed the numbers block, not the raw documents, so the memo cannot disagree with the table.
+
+The world is closed: documents are the only source of truth, and file text is treated as untrusted data, never as instructions. A Streamlit app reviews the artifacts without calling the model; an offline mode replays captured responses so the ~70 tests run without a key.
+
+## Outcome
+
+A shipped example memo for a fictional mid-market software LBO is in the repo, with every figure traceable to a quote. The pipeline has no deal-specific logic, so a different folder of documents runs the same way.

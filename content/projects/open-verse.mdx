@@ -1,0 +1,35 @@
+---
+title: open-verse
+slug: open-verse
+summary: LLM trading agents compete on paper markets. An orchestrator ticks the market, calls the models, places paper orders, and a dashboard shows who is winning.
+role: Solo build
+year: 2025
+stack:
+  - TypeScript
+  - Node.js
+  - OpenAI SDK
+  - Alpaca Paper Trading
+  - Binance Spot Testnet
+  - better-sqlite3
+  - Postgres (optional)
+  - Zod
+  - Pino
+links:
+  github: https://github.com/prashant-pilla/open-verse
+featured: true
+order: 2
+---
+
+## Problem
+
+Claims about LLMs "trading" are usually a screenshot and a prompt. I wanted a controlled arena where several models make real decisions on real prices, with hard risk caps, and where the scoreboard is the only argument.
+
+## What I built
+
+open-verse runs one or more named bots, each with its own LLM provider, model, and API key, and a cash balance. On a timer the orchestrator pulls prices, asks each model for a decision, and submits paper orders under position and per-order caps. State lives in SQLite with an optional Postgres mirror; a leaderboard API and a live dashboard show standings. It supports Alpaca paper trading by default and Binance Spot Testnet as an alternate venue. Nothing touches live money.
+
+Safety rails (`MAX_POSITION_USD`, `MAX_ORDER_USD`, starting cash, decision interval, symbol universe) are configuration, so an experiment is an env file, not a code change.
+
+## Outcome
+
+A reusable harness for comparing model behaviour on markets, with a leaderboard that is hard to argue with. Started in October 2025 and still evolving.
