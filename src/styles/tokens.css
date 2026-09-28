@@ -1,0 +1,229 @@
+/*
+ * Design tokens for prashantpilla.com
+ * ------------------------------------------------------------------
+ * Everything visual that a theme, the 3D hero, the grain layer, or a
+ * motion primitive needs to read lives here as a CSS custom property.
+ *
+ * Two kinds of tokens:
+ *
+ * 1. Tailwind theme tokens (`@theme` block). Tailwind v4 turns each of
+ *    these into a `:root` CSS variable AND a utility class:
+ *      --font-serif  -> `font-serif`, `var(--font-serif)`
+ *      --text-display -> `text-display`
+ *      --radius-lg    -> `rounded-lg`
+ *      --ease-out-expo -> `ease-out-expo`
+ *
+ * 2. Semantic theme palette (`[data-theme="…"]` blocks). These change
+ *    per theme and are read by Tailwind through `@theme inline` in
+ *    globals.css so `bg-bg text-fg border-border text-accent` recolor
+ *    live when `data-theme` on <html> changes. Nothing else needs to
+ *    know which theme is active.
+ *
+ * Theme switching (phase 3) only needs to set `data-theme` on <html>.
+ */
+
+@theme {
+  /* --- Font families -------------------------------------------------
+   * next/font injects --font-instrument-serif / --font-geist-sans /
+   * --font-geist-mono on <html> (see src/app/fonts.ts). We alias them
+   * to the stable names the rest of the site uses. */
+  --font-serif: var(--font-instrument-serif), 'Iowan Old Style', Georgia, serif;
+  --font-sans:
+    var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* --- Type scale (fluid; rem + vw) ----------------------------------
+   * Utilities: text-micro, text-label, text-body, text-lead,
+   *            text-h3, text-h2, text-h1, text-display, text-hero  */
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.4;
+  --text-micro--letter-spacing: 0.08em;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.04em;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-lead: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --text-lead--line-height: 1.5;
+  --text-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --text-h3--line-height: 1.25;
+  --text-h2: clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h1: clamp(2.5rem, 1.8rem + 3.2vw, 4.5rem);
+  --text-h1--line-height: 1.02;
+  --text-h1--letter-spacing: -0.02em;
+  --text-display: clamp(3.5rem, 2rem + 6vw, 8rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.03em;
+  --text-hero: clamp(4.5rem, 2rem + 10vw, 13rem);
+  --text-hero--line-height: 0.88;
+  --text-hero--letter-spacing: -0.04em;
+
+  /* --- Spacing -------------------------------------------------------
+   * Tailwind's numeric spacing (p-4 = 4 * --spacing) stays as-is.
+   * Named section rhythm: py-section, gap-gutter, px-page ... */
+  --spacing: 0.25rem;
+  --spacing-gutter: clamp(1rem, 0.5rem + 2vw, 2rem);
+  --spacing-page: clamp(1.25rem, 0.5rem + 4vw, 5rem);
+  --spacing-section: clamp(5rem, 3rem + 8vw, 11rem);
+  --spacing-section-sm: clamp(3rem, 2rem + 4vw, 6rem);
+
+  /* --- Radii ---------------------------------------------------------- */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-pill: 9999px;
+
+  /* --- Easing (GSAP-compatible curves) --------------------------------
+   * Utilities: ease-out-expo, ease-in-out-expo, ease-out-quart,
+   *            ease-out-back, ease-cinematic */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-cinematic: cubic-bezier(0.83, 0, 0.17, 1);
+
+  /* --- Tracking ------------------------------------------------------- */
+  --tracking-mono: 0.06em;
+  --tracking-display: -0.03em;
+}
+
+:root {
+  /* --- Motion durations (ms as CSS time; read by JS via getComputedStyle) */
+  --dur-instant: 120ms;
+  --dur-fast: 240ms;
+  --dur-base: 480ms;
+  --dur-slow: 800ms;
+  --dur-cinematic: 1200ms;
+
+  /* --- Z-index scale --------------------------------------------------
+   * Use as `z-(--z-nav)` in Tailwind v4 arbitrary-variable syntax. */
+  --z-below: -1;
+  --z-base: 0;
+  --z-hero: 1;
+  --z-content: 10;
+  --z-nav: 100;
+  --z-overlay: 200;
+  --z-palette: 300;
+  --z-cursor: 400;
+  --z-grain: 500;
+  --z-preloader: 600;
+
+  /* --- Layout ------------------------------------------------------- */
+  --content-max: 88rem;
+  --prose-max: 42rem;
+
+  /* Sensible fallbacks in case <html> has no data-theme (mirrors graphite). */
+  --bg: #0e0e0e;
+  --bg-elevated: #161514;
+  --fg: #f2ede4;
+  --fg-muted: #a39e94;
+  --accent: #d9a066;
+  --accent-fg: #0e0e0e;
+  --border: rgb(242 237 228 / 0.1);
+  --grain-opacity: 0.06;
+  --hero-a: 217 160 102;
+  --hero-b: 242 237 228;
+  --hero-c: 92 78 66;
+}
+
+/* ====================================================================
+ * THEMES
+ * Each theme defines the same contract. Dark moods differ in accent
+ * and a slight tint of the near-black base; Paper is the light mode.
+ *
+ *   --bg            page background
+ *   --bg-elevated   cards, panels, palette surface
+ *   --fg            primary text
+ *   --fg-muted      secondary text, labels
+ *   --accent        one accent per theme (links, active states, CTA)
+ *   --accent-fg     text placed on top of --accent
+ *   --border        hairlines, dividers
+ *   --grain-opacity film grain strength (Grain.tsx)
+ *   --hero-a/b/c    RGB triplets ("r g b") for the 3D hero shader
+ * ==================================================================== */
+
+/* Graphite — default. Warm near-black, warm off-white, understated amber. */
+[data-theme='graphite'] {
+  color-scheme: dark;
+  --bg: #0e0e0e;
+  --bg-elevated: #161514;
+  --fg: #f2ede4;
+  --fg-muted: #a39e94;
+  --accent: #d9a066;
+  --accent-fg: #0e0e0e;
+  --border: rgb(242 237 228 / 0.1);
+  --grain-opacity: 0.06;
+  --hero-a: 217 160 102;
+  --hero-b: 242 237 228;
+  --hero-c: 92 78 66;
+}
+
+/* Ember — red-brown base, burnt orange accent. */
+[data-theme='ember'] {
+  color-scheme: dark;
+  --bg: #120d0c;
+  --bg-elevated: #1b1311;
+  --fg: #f5ebe4;
+  --fg-muted: #a8958c;
+  --accent: #e2603f;
+  --accent-fg: #120d0c;
+  --border: rgb(245 235 228 / 0.1);
+  --grain-opacity: 0.07;
+  --hero-a: 226 96 63;
+  --hero-b: 245 200 160;
+  --hero-c: 110 50 40;
+}
+
+/* Sage — green-black base, dusty sage accent. */
+[data-theme='sage'] {
+  color-scheme: dark;
+  --bg: #0d110f;
+  --bg-elevated: #141a17;
+  --fg: #ecefe9;
+  --fg-muted: #98a399;
+  --accent: #9dba8e;
+  --accent-fg: #0d110f;
+  --border: rgb(236 239 233 / 0.1);
+  --grain-opacity: 0.06;
+  --hero-a: 157 186 142;
+  --hero-b: 220 232 210;
+  --hero-c: 60 80 65;
+}
+
+/* Ultraviolet — indigo-black base, soft violet accent. */
+[data-theme='ultraviolet'] {
+  color-scheme: dark;
+  --bg: #0d0b12;
+  --bg-elevated: #15121d;
+  --fg: #efeaf6;
+  --fg-muted: #a099b0;
+  --accent: #b58cff;
+  --accent-fg: #0d0b12;
+  --border: rgb(239 234 246 / 0.1);
+  --grain-opacity: 0.06;
+  --hero-a: 181 140 255;
+  --hero-b: 230 220 255;
+  --hero-c: 70 50 110;
+}
+
+/* Paper — LIGHT. Warm white, near-black type, deeper amber for contrast. */
+[data-theme='paper'] {
+  color-scheme: light;
+  --bg: #f7f5f0;
+  --bg-elevated: #ffffff;
+  --fg: #141311;
+  --fg-muted: #6b665e;
+  --accent: #b8722f;
+  --accent-fg: #f7f5f0;
+  --border: rgb(20 19 17 / 0.12);
+  --grain-opacity: 0.035;
+  --hero-a: 184 114 47;
+  --hero-b: 20 19 17;
+  --hero-c: 205 196 182;
+}
