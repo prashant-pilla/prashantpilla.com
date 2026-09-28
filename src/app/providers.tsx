@@ -1,0 +1,46 @@
+import { getProjects } from '@/lib/content';
+import { CommandPalette } from '@/components/experience/palette/CommandPalette';
+import { PaletteTrigger } from '@/components/experience/palette/PaletteTrigger';
+import { ShortcutHint } from '@/components/experience/shortcuts/ShortcutHint';
+import { ShortcutsProvider } from '@/components/experience/shortcuts/ShortcutsProvider';
+import { ThemeProvider } from '@/components/experience/theme/ThemeProvider';
+import { ThemeScript } from '@/components/experience/theme/ThemeScript';
+import { ThemeSwitcher } from '@/components/experience/theme/ThemeSwitcher';
+
+/**
+ * Experience-layer providers. SERVER component on purpose: `getProjects()`
+ * reads the filesystem at build time, and only the tiny serialisable
+ * subset the palette needs crosses into the client tree.
+ *
+ * Tree:
+ *   <ThemeScript/>                      inline anti-flash bootstrap
+ *   <ThemeProvider>                     data-theme on <html> as the store
+ *     <ShortcutsProvider projects>      global keys + palette open state
+ *       {children}
+ *       <CommandPalette projects/>      Cmd/Ctrl+K, /, ?
+ *       <ThemeSwitcher/>                bottom-right swatches
+ *       <PaletteTrigger/>               touch-only floating "Menu"
+ *       <ShortcutHint/>                 portals into #shortcut-hint
+ */
+export function Providers({ children }: { children: React.ReactNode }) {
+  const projects = getProjects().map((p) => ({
+    title: p.title,
+    slug: p.slug,
+    summary: p.summary,
+  }));
+
+  return (
+    <>
+      <ThemeScript />
+      <ThemeProvider>
+        <ShortcutsProvider projects={projects}>
+          {children}
+          <CommandPalette projects={projects} />
+          <ThemeSwitcher />
+          <PaletteTrigger />
+          <ShortcutHint />
+        </ShortcutsProvider>
+      </ThemeProvider>
+    </>
+  );
+}

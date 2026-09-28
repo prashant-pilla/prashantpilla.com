@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import '../styles/tokens.css';
+@import '../styles/components.css';
 
 /*
  * Semantic palette -> Tailwind utilities.
@@ -65,4 +66,50 @@
       transition-duration: 0.01ms !important;
     }
   }
+}
+
+/* ====================================================================
+ * Experience layer: theme switcher / palette dock + palette motion.
+ * (Appended by the theme-engine + palette work; reduced-motion is
+ *  handled by the global rule above.)
+ * ==================================================================== */
+:root {
+  /* Bottom-right dock shared by ThemeSwitcher (bottom) and PaletteTrigger (above). */
+  --pp-dock-right: calc(1rem + env(safe-area-inset-right, 0px));
+  --pp-dock-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  --pp-dock-stack: calc(var(--pp-dock-bottom) + 2.75rem);
+}
+
+@keyframes pp-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pp-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pp-anim-fade {
+  animation: pp-fade var(--dur-fast) var(--ease-out-quart) both;
+}
+
+.pp-anim-rise {
+  animation: pp-rise var(--dur-base) var(--ease-out-expo) both;
+}
+
+/* cmdk hides filtered-out groups/items via attributes; keep them out of layout. */
+[cmdk-group][hidden],
+[cmdk-item][hidden] {
+  display: none;
 }
