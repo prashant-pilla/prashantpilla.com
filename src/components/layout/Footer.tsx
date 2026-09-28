@@ -33,6 +33,7 @@ export function Footer() {
               <a
                 href={`mailto:${profile.email}`}
                 className="group inline-flex items-center gap-2 font-sans text-h3 text-fg transition-colors duration-(--dur-fast) ease-out-quart hover:text-accent"
+                data-magnetic
               >
                 {profile.email}
                 <Arrow
@@ -49,6 +50,7 @@ export function Footer() {
                 download
                 className="inline-flex items-center gap-1.5 text-fg-muted transition-colors duration-(--dur-fast) ease-out-quart hover:text-accent"
                 data-resume-link
+                data-magnetic
               >
                 Resume
                 <Arrow direction="s" />
@@ -60,7 +62,7 @@ export function Footer() {
             </div>
           </div>
 
-          <nav aria-label="Social" className="md:col-span-5">
+          <nav aria-label="Social" className="md:col-span-5" data-reveal>
             <ul className="divide-y divide-border border-y border-border">
               {socials.map((s) => (
                 <li key={s.platform}>
@@ -69,6 +71,7 @@ export function Footer() {
                     target="_blank"
                     rel="noreferrer noopener"
                     className="group flex items-center justify-between gap-4 py-4 transition-colors duration-(--dur-fast) ease-out-quart hover:text-accent"
+                    data-magnetic
                   >
                     <span className="font-sans text-body">{s.label}</span>
                     <span className="flex items-center gap-2 font-mono text-label text-fg-muted group-hover:text-accent">

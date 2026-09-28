@@ -26,6 +26,7 @@ import {
   type SectionId,
   type ShortcutAction,
 } from '@/lib/shortcuts';
+import { navigateWithTransition } from '@/lib/navigation';
 import { useTheme } from '@/components/experience/theme/ThemeProvider';
 
 interface ShortcutsContextValue {
@@ -78,12 +79,21 @@ export function ShortcutsProvider({
 
   const isHome = pathname === '/';
 
+  /* Route changes go through the motion layer's cinematic cut when it is
+   * mounted and allowed; otherwise a plain push. */
+  const push = useCallback(
+    (href: string) => {
+      if (!navigateWithTransition(href)) router.push(href);
+    },
+    [router],
+  );
+
   const navigateTo = useCallback(
     (id: SectionId) => {
       if (isHome && scrollToId(id)) return;
-      router.push(id === SECTION_IDS.hero ? '/' : `/#${id}`);
+      push(id === SECTION_IDS.hero ? '/' : `/#${id}`);
     },
-    [isHome, router],
+    [isHome, push],
   );
 
   const run = useCallback(
@@ -103,7 +113,7 @@ export function ShortcutsProvider({
           return;
         case 'cycle-filter': {
           if (!isHome) {
-            router.push(`/#${SECTION_IDS.highlights}`);
+            push(`/#${SECTION_IDS.highlights}`);
             return;
           }
           window.dispatchEvent(new CustomEvent(CYCLE_FILTER_EVENT));
@@ -119,7 +129,7 @@ export function ShortcutsProvider({
           return;
       }
     },
-    [cycleTheme, isHome, navigateTo, openPalette, router],
+    [cycleTheme, isHome, navigateTo, openPalette, push],
   );
 
   /* Global key handling. Refs keep the listener stable across renders. */

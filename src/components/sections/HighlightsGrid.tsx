@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Highlight, HighlightKind } from '@content/types';
+import { refreshReveals } from '@/components/experience/motion/reveals';
 import { Arrow } from '@/components/ui/Arrow';
 
 export type HighlightFilter = 'all' | HighlightKind;
@@ -50,6 +51,12 @@ export function HighlightsGrid({ items }: HighlightsGridProps) {
     [items, filter],
   );
 
+  /* New cards after a filter change start hidden (html.js [data-reveal]);
+   * ask the motion layer to pick them up. No-op without motion. */
+  useEffect(() => {
+    refreshReveals();
+  }, [visible]);
+
   return (
     <div data-highlights data-filter={filter}>
       <div
@@ -83,7 +90,11 @@ export function HighlightsGrid({ items }: HighlightsGridProps) {
         </span>
       </div>
 
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-highlights-grid>
+      <ul
+        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        data-highlights-grid
+        data-reveal-group
+      >
         {visible.map((h) => (
           <li key={h.id} data-reveal data-kind={h.kind}>
             <HighlightCard item={h} />

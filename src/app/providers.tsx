@@ -1,4 +1,6 @@
 import { getProjects } from '@/lib/content';
+import { MotionProvider } from '@/components/experience/motion/MotionProvider';
+import { MotionScript } from '@/components/experience/motion/MotionScript';
 import { CommandPalette } from '@/components/experience/palette/CommandPalette';
 import { PaletteTrigger } from '@/components/experience/palette/PaletteTrigger';
 import { ShortcutHint } from '@/components/experience/shortcuts/ShortcutHint';
@@ -14,6 +16,7 @@ import { ThemeSwitcher } from '@/components/experience/theme/ThemeSwitcher';
  *
  * Tree:
  *   <ThemeScript/>                      inline anti-flash bootstrap
+ *   <MotionScript/>                     inline `js` / preload-curtain bootstrap
  *   <ThemeProvider>                     data-theme on <html> as the store
  *     <ShortcutsProvider projects>      global keys + palette open state
  *       {children}
@@ -21,6 +24,7 @@ import { ThemeSwitcher } from '@/components/experience/theme/ThemeSwitcher';
  *       <ThemeSwitcher/>                bottom-right swatches
  *       <PaletteTrigger/>               touch-only floating "Menu"
  *       <ShortcutHint/>                 portals into #shortcut-hint
+ *       <MotionProvider/>               preloader, Lenis, reveals, cursor, cuts
  */
 export function Providers({ children }: { children: React.ReactNode }) {
   const projects = getProjects().map((p) => ({
@@ -32,6 +36,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
       <ThemeScript />
+      <MotionScript />
       <ThemeProvider>
         <ShortcutsProvider projects={projects}>
           {children}
@@ -39,6 +44,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <ThemeSwitcher />
           <PaletteTrigger />
           <ShortcutHint />
+          <MotionProvider />
         </ShortcutsProvider>
       </ThemeProvider>
     </>

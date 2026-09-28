@@ -40,6 +40,7 @@ export function CopyEmail({ email, className }: CopyEmailProps) {
       type="button"
       onClick={copy}
       data-copy-email
+      data-cursor="copy"
       className={[
         'inline-flex min-w-[7ch] items-center justify-center rounded-pill border border-border px-3 py-1 font-mono text-micro tracking-mono uppercase transition-colors duration-(--dur-fast) ease-out-quart',
         state === 'copied'

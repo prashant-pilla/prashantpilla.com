@@ -25,7 +25,7 @@ export function VenturesSection() {
           lede="Scouting, angel work, and the occasional company. If you are a founder or want to build something together, my inbox is open."
         />
 
-        <ul className="grid gap-4 md:grid-cols-2" data-ventures>
+        <ul className="grid gap-4 md:grid-cols-2" data-ventures data-reveal-group>
           {ventures.map((v) => {
             const status = v.status as Exclude<VentureStatus, 'placeholder'>;
             const inner = (

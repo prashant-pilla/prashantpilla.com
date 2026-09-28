@@ -6,6 +6,8 @@
  * src/components/experience/shortcuts/ShortcutsProvider.tsx.
  */
 
+import { scrollToElement } from './scroll';
+
 /** Section ids on the home page (owned by the sections agent). */
 export const SECTION_IDS = {
   hero: 'hero',
@@ -122,12 +124,15 @@ export function isElementInView(el: Element, threshold = 0.35): boolean {
   return visible > Math.min(r.height, vh) * threshold;
 }
 
-/** Smooth-scroll to an element id on the current page; false if missing. */
+/**
+ * Smooth-scroll to an element id on the current page; false if missing.
+ * Goes through the scroll registry so Lenis drives it when present.
+ */
 export function scrollToId(id: string): boolean {
   if (typeof document === 'undefined') return false;
   const el = document.getElementById(id);
   if (!el) return false;
-  el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  scrollToElement(el);
   if (window.history?.replaceState) {
     window.history.replaceState(null, '', id === SECTION_IDS.hero ? '/' : `#${id}`);
   }

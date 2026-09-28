@@ -18,6 +18,7 @@ export function Nav() {
       />
       <a
         href="#main"
+        data-native
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-(--z-overlay) focus:rounded-pill focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-micro focus:tracking-mono focus:text-accent-fg focus:uppercase"
       >
         Skip to content
@@ -28,7 +29,8 @@ export function Nav() {
       >
         <Link
           href="/"
-          className="font-serif text-h3 leading-none tracking-display transition-colors duration-(--dur-fast) ease-out-quart hover:text-accent"
+          className="inline-block font-serif text-h3 leading-none tracking-display transition-colors duration-(--dur-fast) ease-out-quart hover:text-accent"
+          data-magnetic
         >
           {profile.name}
         </Link>

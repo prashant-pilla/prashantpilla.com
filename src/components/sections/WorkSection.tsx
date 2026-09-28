@@ -24,12 +24,13 @@ export function WorkSection() {
           lede="Case studies with the problem, what I built, and what happened."
         />
 
-        <ol className="border-t border-border" data-work-list>
+        <ol className="border-t border-border" data-work-list data-reveal-group>
           {projects.map((p, i) => (
             <li
               key={p.slug}
               className="relative border-b border-border"
               data-preview={p.slug}
+              data-cursor="view"
               data-reveal
             >
               <Link
@@ -41,7 +42,10 @@ export function WorkSection() {
                 </span>
 
                 <span className="md:col-span-6">
-                  <span className="block font-serif text-display leading-none tracking-display">
+                  <span
+                    className="block font-serif text-display leading-none tracking-display"
+                    data-preview-title
+                  >
                     {p.title}
                   </span>
                 </span>
@@ -64,11 +68,11 @@ export function WorkSection() {
                 </span>
               </Link>
 
-              {/* Hover preview slot (hidden until the motion phase enables it). */}
+              {/* Hover preview: WorkPreview positions this under the cursor on desktop. */}
               <div
                 data-preview-tile
                 aria-hidden="true"
-                className="pointer-events-none absolute top-1/2 right-[8%] hidden w-[22rem] -translate-y-1/2 md:block md:opacity-0"
+                className="pointer-events-none absolute top-0 left-0 hidden w-[22rem] md:block md:opacity-0"
               >
                 <GradientTile
                   seed={i + 1}

@@ -14,6 +14,7 @@ import {
   type PaletteProject,
   type SectionId,
 } from '@/lib/shortcuts';
+import { navigateWithTransition } from '@/lib/navigation';
 import { THEMES, THEME_DESCRIPTIONS, THEME_LABELS, THEME_SWATCHES } from '@/lib/theme';
 import { useShortcuts } from '@/components/experience/shortcuts/ShortcutsProvider';
 import { useTheme } from '@/components/experience/theme/ThemeProvider';
@@ -148,7 +149,7 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
 
   const go = (href: string) => {
     close();
-    router.push(href);
+    if (!navigateWithTransition(href)) router.push(href);
   };
 
   const copyEmail = async () => {
@@ -169,7 +170,13 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
   const mod = modKeyLabel(apple);
 
   return createPortal(
-    <div className="fixed inset-0 z-(--z-palette)" data-pp-palette onKeyDown={onKeyDown}>
+    <div
+      className="fixed inset-0 z-(--z-palette)"
+      data-pp-palette
+      // Lenis ignores wheel events under this node; body overflow is locked anyway.
+      data-lenis-prevent
+      onKeyDown={onKeyDown}
+    >
       {/* Backdrop */}
       <div
         aria-hidden="true"
