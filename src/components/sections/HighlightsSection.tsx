@@ -12,10 +12,10 @@ export function HighlightsSection() {
           eyebrow="01 — Highlights"
           title={
             <>
-              A collection, <span className="text-fg-muted italic">not a timeline.</span>
+              Things I have built, <span className="text-fg-muted italic">and a few I have lived.</span>
             </>
           }
-          lede="Builds, research, ventures, and a few things from life. Curated, not chronological. Press f to cycle the filter."
+          lede="Builds, research, ventures, and life. Press f to cycle the filter."
         />
         <HighlightsGrid items={items} />
       </div>

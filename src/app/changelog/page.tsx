@@ -53,10 +53,10 @@ export default function ChangelogPage() {
           eyebrow="Changelog"
           title={
             <>
-              Momentum, <span className="text-fg-muted italic">not biography.</span>
+              What has been <span className="text-fg-muted italic">shipping lately.</span>
             </>
           }
-          lede="The only dated surface on the site. Short entries on what shipped, what got certified, and what I am reading."
+          lede="Short entries on what shipped, what got certified, and what I am reading."
         />
 
         <div className="mx-auto max-w-4xl" data-changelog>

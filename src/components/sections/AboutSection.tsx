@@ -16,7 +16,8 @@ export function AboutSection() {
           eyebrow="03 — About"
           title={
             <>
-              Reflective, <span className="text-fg-muted italic">not a resume.</span>
+              Born in Auckland. Raised in Hyderabad.{' '}
+              <span className="text-fg-muted italic">Building in New York.</span>
             </>
           }
         />
