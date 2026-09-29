@@ -45,6 +45,7 @@ export function ShortcutHint() {
   return createPortal(
     <div
       data-pp-shortcut-hint
+      role="group"
       className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-micro tracking-mono text-fg-muted normal-case select-none pointer-coarse:hidden"
       aria-label="Keyboard shortcuts"
     >

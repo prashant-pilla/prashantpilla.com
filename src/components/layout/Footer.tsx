@@ -89,8 +89,9 @@ export function Footer() {
           <p>
             &copy; {year} {profile.fullName}
           </p>
-          {/* Filled by the command palette with its shortcut legend. */}
-          <div id="shortcut-hint" className="min-h-[1.4em]" aria-live="polite" />
+          {/* Filled by the command palette with its shortcut legend (not a live
+              region: a static legend must not be announced on every mount). */}
+          <div id="shortcut-hint" className="min-h-[1.4em]" />
         </div>
       </div>
     </footer>

@@ -1,8 +1,8 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { fontClassNames } from './fonts';
 import { Grain } from '@/components/experience/Grain';
 import { profile } from '@content/profile';
-import { DEFAULT_THEME } from '@/lib/theme';
+import { DEFAULT_THEME, THEME_SWATCHES } from '@/lib/theme';
 import { SITE_URL } from '@/lib/site';
 import { Nav } from '@/components/layout/Nav';
 import { Footer } from '@/components/layout/Footer';
@@ -45,6 +45,14 @@ export const metadata: Metadata = {
     creator: profile.socials.find((s) => s.platform === 'x')?.handle,
   },
   robots: { index: true, follow: true },
+};
+
+/* Browser chrome colour for the default theme before hydration; the theme
+ * engine (`syncThemeColorMeta`) rewrites this tag as the visitor switches. */
+export const viewport: Viewport = {
+  themeColor: THEME_SWATCHES[DEFAULT_THEME].bg,
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

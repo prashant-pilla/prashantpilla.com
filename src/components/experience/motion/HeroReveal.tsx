@@ -45,11 +45,14 @@ export function HeroReveal() {
 
         const lines: Element[] = [];
         copy.forEach((el) => {
+          // `aria: 'none'`: these are <p>, where aria-label is prohibited
+          // (axe aria-prohibited-attr). Line splitting keeps words intact, so
+          // screen readers read the line <div>s in order without help.
           const s = SplitText.create(el, {
             type: 'lines',
             mask: 'lines',
             linesClass: 'pp-line',
-            aria: 'auto',
+            aria: 'none',
           });
           splits.push(s);
           lines.push(...s.lines);

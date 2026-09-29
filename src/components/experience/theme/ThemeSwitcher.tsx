@@ -80,7 +80,7 @@ export function ThemeSwitcher() {
         aria-label="Site theme"
         onKeyDown={onKeyDown}
         onMouseLeave={() => setHovered(null)}
-        className="pointer-events-auto flex items-center gap-1.5 rounded-pill border border-border bg-bg-elevated/85 p-1.5 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.5)] backdrop-blur-md"
+        className="pointer-events-auto flex items-center gap-1.5 rounded-pill border border-border bg-bg-elevated/85 p-1.5 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.5)] backdrop-blur-md pointer-coarse:gap-0.5"
       >
         {THEMES.map((id) => {
           const active = id === theme;
@@ -99,7 +99,9 @@ export function ThemeSwitcher() {
               onMouseEnter={() => setHovered(id)}
               onFocus={() => setHovered(id)}
               onBlur={() => setHovered(null)}
-              className="relative grid size-6 cursor-pointer place-items-center rounded-pill outline-none focus-visible:outline-none"
+              // Touch: 36px hit areas (visual dot stays 14px) so neighbouring
+              // swatches are not "too close" for a 48px finger. See --pp-dock-*.
+              className="relative grid size-6 cursor-pointer place-items-center rounded-pill outline-none focus-visible:outline-none pointer-coarse:size-9"
             >
               <span
                 aria-hidden="true"

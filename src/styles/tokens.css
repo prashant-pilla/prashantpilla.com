@@ -213,18 +213,20 @@
   --hero-c: 70 50 110;
 }
 
-/* Paper — LIGHT. Warm white, near-black type, deeper amber for contrast. */
+/* Paper — LIGHT. Warm white, near-black type, deep amber.
+ * Accent is tuned for AA as small text: 4.7:1 on --bg, 5.2:1 on
+ * --bg-elevated, and --accent-fg on --accent 4.7:1 (#b8722f was 3.5:1). */
 [data-theme='paper'] {
   color-scheme: light;
   --bg: #f7f5f0;
   --bg-elevated: #ffffff;
   --fg: #141311;
   --fg-muted: #6b665e;
-  --accent: #b8722f;
+  --accent: #9e5e1d;
   --accent-fg: #f7f5f0;
   --border: rgb(20 19 17 / 0.12);
   --grain-opacity: 0.035;
-  --hero-a: 184 114 47;
+  --hero-a: 158 94 29;
   --hero-b: 20 19 17;
   --hero-c: 205 196 182;
 }

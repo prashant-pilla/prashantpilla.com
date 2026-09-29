@@ -60,6 +60,9 @@ function revealHeading(el: HTMLElement) {
     mask: 'lines',
     linesClass: 'pp-line',
     autoSplit: true,
+    // Headings may carry aria-label (SplitText's default); anything else
+    // tagged [data-split] (e.g. a <p>) may not, and line splits read fine.
+    aria: /^H[1-6]$/.test(el.tagName) ? 'auto' : 'none',
     onSplit(self) {
       gsap.set(el, { opacity: 1 });
       if (el.dataset.revealed) return undefined;

@@ -55,7 +55,7 @@ export const THEME_SWATCHES: Record<ThemeId, { bg: string; accent: string }> = {
   ember: { bg: '#120d0c', accent: '#e2603f' },
   sage: { bg: '#0d110f', accent: '#9dba8e' },
   ultraviolet: { bg: '#0d0b12', accent: '#b58cff' },
-  paper: { bg: '#f7f5f0', accent: '#b8722f' },
+  paper: { bg: '#f7f5f0', accent: '#9e5e1d' },
 };
 
 /** Which themes are light (used for color-scheme hints and 3D fallbacks). */

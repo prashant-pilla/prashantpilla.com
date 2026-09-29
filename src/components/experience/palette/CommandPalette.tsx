@@ -218,7 +218,7 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
                 page === 'shortcuts' ? 'Search shortcuts…' : 'Jump to a section, project, action…'
               }
               aria-label={page === 'shortcuts' ? 'Search shortcuts' : 'Search commands'}
-              className="min-w-0 flex-1 bg-transparent py-3.5 font-sans text-body text-fg outline-none placeholder:text-fg-muted/70"
+              className="min-w-0 flex-1 bg-transparent py-3.5 font-sans text-body text-fg outline-none placeholder:text-fg-muted"
             />
             <kbd className="hidden rounded-xs border border-border px-1.5 py-0.5 font-mono text-micro text-fg-muted sm:inline-block">
               esc
@@ -441,7 +441,7 @@ function Item({
       <span className="block min-w-0 flex-1">
         <span className="block truncate">{children}</span>
         {sub && (
-          <span className="mt-0.5 hidden truncate font-sans text-micro tracking-normal text-fg-muted/80 normal-case sm:block">
+          <span className="mt-0.5 hidden truncate font-sans text-micro tracking-normal text-fg-muted normal-case sm:block">
             {sub}
           </span>
         )}
