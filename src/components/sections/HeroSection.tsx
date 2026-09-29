@@ -80,7 +80,7 @@ export function HeroSection() {
 
         <a
           href="#highlights"
-          className="mt-14 inline-flex items-center gap-2 font-mono text-micro tracking-mono text-fg-muted uppercase transition-colors duration-(--dur-fast) ease-out-quart hover:text-accent"
+          className="mt-14 inline-flex items-center gap-2 font-mono text-micro tracking-mono text-fg-muted uppercase transition-colors duration-(--dur-fast) ease-out-quart hover:text-accent pointer-coarse:-my-3 pointer-coarse:py-3"
           data-scroll-hint
         >
           Scroll

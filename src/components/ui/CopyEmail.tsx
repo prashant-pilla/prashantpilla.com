@@ -42,7 +42,7 @@ export function CopyEmail({ email, className }: CopyEmailProps) {
       data-copy-email
       data-cursor="copy"
       className={[
-        'inline-flex min-w-[7ch] items-center justify-center rounded-pill border border-border px-3 py-1 font-mono text-micro tracking-mono uppercase transition-colors duration-(--dur-fast) ease-out-quart',
+        'inline-flex min-w-[7ch] items-center justify-center rounded-pill border border-border px-3 py-1 font-mono text-micro tracking-mono uppercase transition-colors duration-(--dur-fast) ease-out-quart pointer-coarse:min-h-10 pointer-coarse:px-4',
         state === 'copied'
           ? 'border-accent bg-accent text-accent-fg'
           : 'text-fg-muted hover:border-accent hover:text-fg',

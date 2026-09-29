@@ -75,7 +75,7 @@ export function HighlightsGrid({ items }: HighlightsGridProps) {
               onClick={() => setFilter(f.id)}
               data-filter-chip={f.id}
               className={[
-                'rounded-pill border px-3.5 py-1.5 font-mono text-micro tracking-mono uppercase transition-colors duration-(--dur-fast) ease-out-quart',
+                'rounded-pill border px-3.5 py-1.5 font-mono text-micro tracking-mono uppercase transition-colors duration-(--dur-fast) ease-out-quart pointer-coarse:min-h-10 pointer-coarse:px-4',
                 active
                   ? 'border-fg bg-fg text-bg'
                   : 'border-border text-fg-muted hover:border-fg-muted hover:text-fg',

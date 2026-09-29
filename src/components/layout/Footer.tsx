@@ -48,7 +48,7 @@ export function Footer() {
               <a
                 href={profile.resumePath}
                 download
-                className="inline-flex items-center gap-1.5 text-fg-muted transition-colors duration-(--dur-fast) ease-out-quart hover:text-accent"
+                className="inline-flex items-center gap-1.5 text-fg-muted transition-colors duration-(--dur-fast) ease-out-quart hover:text-accent pointer-coarse:-my-3 pointer-coarse:py-3"
                 data-resume-link
                 data-magnetic
               >

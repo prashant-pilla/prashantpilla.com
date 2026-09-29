@@ -62,7 +62,15 @@ export function HeroReveal() {
         gsap.set([...name, ...copy, ...readout], { opacity: 1 });
         gsap.set(hint, { opacity: 0 });
 
-        tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+        tl = gsap.timeline({
+          defaults: { ease: 'expo.out' },
+          // Once the choreography is done, put the plain text back: no line
+          // masks to fight a resize/orientation change, no aria-label on the
+          // name, natural wrapping again.
+          onComplete: () => {
+            splits.splice(0).forEach((s) => s.revert());
+          },
+        });
         tl.fromTo(canvas, { opacity: 0 }, { opacity: 1, duration: 1.8, ease: 'power2.out' }, 0);
         tl.fromTo(readout, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8 }, 0.15);
         if (nameSplit) {
