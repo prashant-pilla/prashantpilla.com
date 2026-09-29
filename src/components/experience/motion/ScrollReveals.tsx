@@ -17,8 +17,22 @@ export function ScrollReveals() {
     const mm = gsap.matchMedia();
 
     mm.add(MQ.motion, () => {
+      /* First pass runs in an idle slot: SplitText measures every heading
+       * (forced layouts) and ScrollTrigger refreshes, none of which needs
+       * to compete with hydration or the hero reveal. Below-the-fold
+       * content stays CSS-hidden until then and scroll is still locked. */
+      let idle: number | undefined;
+      let timer: number | undefined;
+      const initWhenIdle = () => {
+        const run = () => void initReveals();
+        if (typeof window.requestIdleCallback === 'function') {
+          idle = window.requestIdleCallback(run, { timeout: 1000 });
+        } else {
+          timer = window.setTimeout(run, 120);
+        }
+      };
       const offs = [
-        onPreloaderDone(() => void initReveals()),
+        onPreloaderDone(initWhenIdle),
         on('page:leave', () => resetReveals()),
         on('page:enter', ({ via }) => {
           if (via === 'initial') return; // handled by onPreloaderDone
@@ -28,6 +42,8 @@ export function ScrollReveals() {
       ];
       return () => {
         offs.forEach((off) => off());
+        if (idle !== undefined) window.cancelIdleCallback?.(idle);
+        if (timer !== undefined) window.clearTimeout(timer);
         resetReveals();
       };
     });

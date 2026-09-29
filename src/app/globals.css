@@ -77,7 +77,14 @@
   /* Bottom-right dock shared by ThemeSwitcher (bottom) and PaletteTrigger (above). */
   --pp-dock-right: calc(1rem + env(safe-area-inset-right, 0px));
   --pp-dock-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  /* switcher height (dot 24px + padding 12px) + 8px gap */
   --pp-dock-stack: calc(var(--pp-dock-bottom) + 2.75rem);
+}
+@media (pointer: coarse) {
+  :root {
+    /* switcher swatches grow to 36px hit areas on touch: 48px + 8px gap */
+    --pp-dock-stack: calc(var(--pp-dock-bottom) + 3.5rem);
+  }
 }
 
 @keyframes pp-fade {
@@ -127,14 +134,40 @@ html.js [data-hero-canvas] {
   opacity: 0;
 }
 
-/* First-visit curtain painted before hydration; the React Preloader
- * removes `pp-preload` the moment its own overlay is in the DOM. */
+/* First-visit curtain. Two layers with the same `--bg`:
+ *  - `html::before` paints the instant CSS is applied (no markup needed);
+ *  - the server-rendered Preloader overlay (`[data-preloader]`, first in
+ *    <body>) paints on top of it with the first greeting, name and
+ *    counter, so the intro is on screen before any JS runs.
+ * The React Preloader drops `pp-preload` once it owns the overlay
+ * (`data-active`); without either flag the overlay is not rendered. */
 html.pp-preload::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: var(--z-preloader);
   background: var(--bg);
+}
+[data-preloader] {
+  display: none;
+}
+html.pp-preload [data-preloader],
+[data-preloader][data-active] {
+  display: flex;
+}
+/* First greeting visible from the first frame; GSAP's inline autoAlpha
+ * takes over (and wins) once the timeline starts. */
+[data-preloader] [data-greeting]:first-of-type {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Under the curtain the page copy is fully painted (so the largest text
+ * paint — hero name, or a sub-page title — is the first paint, not the
+ * end of the intro). It returns to the hidden pre-reveal state when the
+ * React Preloader takes over. */
+html.pp-preload [data-reveal] {
+  opacity: 1;
 }
 
 html.pp-preload,
@@ -171,7 +204,15 @@ html.pp-cursor * {
   html.js [data-hero-canvas] {
     opacity: 1;
   }
-  html.pp-preload::before {
+  html.pp-preload::before,
+  html.pp-preload [data-preloader] {
     display: none;
+  }
+}
+
+/* Safari < 15.4 / older engines without small-viewport units. */
+@supports not (min-height: 100svh) {
+  .min-h-svh {
+    min-height: 100vh;
   }
 }

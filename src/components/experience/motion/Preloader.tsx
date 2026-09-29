@@ -13,19 +13,26 @@ const STEP = 0.27;
 const HOLD = 0.3;
 const EXIT = 0.9;
 
+type Phase = 'pending' | 'active' | 'done';
+
 /**
- * First-visit-of-the-session curtain. The inline MotionScript already
- * painted a CSS curtain (`html.pp-preload::before`) so this component can
- * mount after hydration without a flash; it removes that class in a layout
- * effect once its own overlay is in the DOM.
+ * First-visit-of-the-session curtain.
+ *
+ * The overlay is server-rendered (phase `pending`) and sits first in
+ * <body>, so on a first visit the inline MotionScript's `pp-preload`
+ * class makes it visible in the very first paint: first greeting, name
+ * and counter are on screen before any JS runs, and the hero copy is
+ * already painted underneath it (see globals.css), so the page's largest
+ * text paint does not wait for hydration or the intro. Without the class
+ * (repeat visit, reduced motion, no JS) CSS keeps it `display: none` and
+ * the effect below unmounts it.
  *
  * Sequence: greetings cycle in the serif while a mono counter and a
  * hairline run 0→100, then the whole panel lifts (clip-path) and
- * `finishPreloader()` hands off to the hero reveal. Skipped (instantly
- * finished) under reduced motion and on repeat navigations.
+ * `finishPreloader()` hands off to the hero reveal.
  */
 export function Preloader() {
-  const [active, setActive] = useState(false);
+  const [phase, setPhase] = useState<Phase>('pending');
   const root = useRef<HTMLDivElement>(null);
   const started = useRef(false);
   const greetings = profile.greetings.length ? profile.greetings : ['Hello'];
@@ -38,19 +45,22 @@ export function Preloader() {
     if (!show) {
       html.classList.remove(PRELOAD_CLASS);
       finishPreloader();
+      setPhase('done');
       return;
     }
     lockScroll();
-    setActive(true);
+    setPhase('active');
   }, []);
 
-  // Hand-off: our overlay is painted, drop the CSS curtain in the same frame.
+  // Hand-off: our overlay now owns its visibility (`data-active`), drop the
+  // bootstrap class in the same frame so the hero copy goes back to its
+  // pre-reveal hidden state underneath.
   useLayoutEffect(() => {
-    if (active) document.documentElement.classList.remove(PRELOAD_CLASS);
-  }, [active]);
+    if (phase === 'active') document.documentElement.classList.remove(PRELOAD_CLASS);
+  }, [phase]);
 
   useEffect(() => {
-    if (!active) return;
+    if (phase !== 'active') return;
     const el = root.current;
     if (!el) return;
 
@@ -103,20 +113,21 @@ export function Preloader() {
       );
       tl.add(release, total + 0.2);
       tl.to(el, { clipPath: 'inset(0 0 100% 0)', duration: EXIT, ease: 'expo.inOut' }, total + 0.2);
-      tl.add(() => setActive(false));
+      tl.add(() => setPhase('done'));
     }, el);
 
     return () => ctx.revert();
-  }, [active]);
+  }, [phase]);
 
-  if (!active) return null;
+  if (phase === 'done') return null;
 
   return (
     <div
       ref={root}
       aria-hidden="true"
       data-preloader
-      className="fixed inset-0 z-(--z-preloader) flex items-center justify-center bg-bg text-fg"
+      data-active={phase === 'active' ? '' : undefined}
+      className="fixed inset-0 z-(--z-preloader) items-center justify-center bg-bg text-fg"
       style={{ clipPath: 'inset(0 0 0% 0)' }}
     >
       <div className="relative grid h-[1.2em] w-full place-items-center font-serif text-display tracking-display">
@@ -134,7 +145,13 @@ export function Preloader() {
 
       <div className="absolute inset-x-page bottom-8 flex items-end justify-between font-mono text-micro tracking-mono text-fg-muted uppercase">
         <span>{profile.name}</span>
-        <span data-counter className="text-fg tabular-nums">
+        {/* Fixed width + layout containment: the per-frame textContent
+            update must not re-lay-out anything beyond this box. */}
+        <span
+          data-counter
+          className="inline-block min-w-[3ch] text-right text-fg tabular-nums"
+          style={{ contain: 'layout paint' }}
+        >
           000
         </span>
       </div>

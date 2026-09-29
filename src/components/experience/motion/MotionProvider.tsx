@@ -7,7 +7,6 @@ import { JS_CLASS, MOTION_CLASS, PRELOAD_CLASS } from './constants';
 import { MQ, ScrollTrigger, gsap } from './gsap';
 import { Magnetic } from './Magnetic';
 import { PageTransition } from './PageTransition';
-import { Preloader } from './Preloader';
 import { ScrollReveals } from './ScrollReveals';
 import { SmoothScroll } from './SmoothScroll';
 import { WorkPreview } from './WorkPreview';
@@ -20,9 +19,11 @@ import { WorkPreview } from './WorkPreview';
  * motion mid-session: every effect's `gsap.matchMedia` reverts itself and
  * we drop the `js` class so CSS stops hiding `[data-reveal]`.
  *
- * Order matters a little: Preloader before SmoothScroll so the scroll lock
- * is registered before Lenis exists; PageTransition last so its initial
- * `page:enter` is emitted after the listeners above have subscribed.
+ * The Preloader is mounted separately by Providers, first in <body>, so
+ * its server-rendered curtain is part of the first paint; being earlier in
+ * the tree its effects (scroll lock) still run before Lenis exists.
+ * PageTransition goes last so its initial `page:enter` is emitted after
+ * the listeners above have subscribed.
  */
 export function MotionProvider() {
   const { open } = useShortcuts();
@@ -46,7 +47,6 @@ export function MotionProvider() {
 
   return (
     <>
-      <Preloader />
       <SmoothScroll />
       <ScrollReveals />
       <WorkPreview />

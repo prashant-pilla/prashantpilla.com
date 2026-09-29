@@ -4,9 +4,10 @@
  * Hero3D — drop-in generative node-field for the hero section.
  *
  * Renders a wrapper that fills its (positioned) parent. On the server and
- * during the first client paint it shows `fallback`; after mount it runs
- * the capability checks in `@/lib/gpu` and either mounts the WebGL scene
- * (code-split, fades in over the fallback) or keeps the fallback.
+ * during the first client paint it shows `fallback`; once the intro
+ * curtain is gone and the main thread is idle it runs the capability
+ * checks in `@/lib/gpu` and either mounts the WebGL scene (code-split,
+ * fades in over the fallback) or keeps the fallback.
  *
  *   <section className="relative h-screen">
  *     <Hero3D fallback={<HeroBackdrop />} />
@@ -19,8 +20,40 @@
  */
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { MIN_PROBE_FPS, assessGpu, probeFrameRate, type GpuTier } from '@/lib/gpu';
+import { onPreloaderDone } from '@/components/experience/motion/bus';
 import { LazyHeroScene, preloadHeroScene } from './Hero3D.lazy';
 import { FADE_IN_MS, FPS_PROBE_MS } from './scene/config';
+
+/** Upper bound on how long we wait for an idle slot before probing anyway. */
+const IDLE_TIMEOUT_MS = 1500;
+
+/**
+ * Runs `cb` once the intro curtain is gone and the main thread has an idle
+ * slot. Fetching and evaluating three.js (~900 KB of script) during the
+ * initial load would compete with hydration, the preloader timeline and
+ * the hero reveal; the static backdrop covers the gap and the scene
+ * cross-fades in when it is ready.
+ */
+function whenReadyForScene(cb: () => void): () => void {
+  let cancelled = false;
+  let idleId: number | undefined;
+  let timerId: number | undefined;
+  const offPreloader = onPreloaderDone(() => {
+    if (cancelled) return;
+    // Safari has no requestIdleCallback; a short timeout is the fallback.
+    if (typeof window.requestIdleCallback === 'function') {
+      idleId = window.requestIdleCallback(() => !cancelled && cb(), { timeout: IDLE_TIMEOUT_MS });
+    } else {
+      timerId = window.setTimeout(() => !cancelled && cb(), 250);
+    }
+  });
+  return () => {
+    cancelled = true;
+    offPreloader();
+    if (idleId !== undefined) window.cancelIdleCallback?.(idleId);
+    if (timerId !== undefined) window.clearTimeout(timerId);
+  };
+}
 
 export interface Hero3DProps {
   /** Appended to the default `absolute inset-0 overflow-hidden`. */
@@ -45,11 +78,13 @@ export function Hero3D({ className, fallback, intensity = 1 }: Hero3DProps) {
   useEffect(() => {
     let cancelled = false;
 
-    const verdict = assessGpu();
-    if (verdict.mode === 'static') {
-      setReason(verdict.reasons.join(' '));
-      setPhase('static');
-    } else {
+    const decide = () => {
+      const verdict = assessGpu();
+      if (verdict.mode === 'static') {
+        setReason(verdict.reasons.join(' '));
+        setPhase('static');
+        return;
+      }
       setTier(verdict.tier);
       void preloadHeroScene();
       void probeFrameRate(FPS_PROBE_MS).then((fps) => {
@@ -61,7 +96,8 @@ export function Hero3D({ className, fallback, intensity = 1 }: Hero3DProps) {
           setPhase('3d');
         }
       });
-    }
+    };
+    const cancelWait = whenReadyForScene(decide);
 
     // Live downgrade if the visitor turns on reduced motion mid-session.
     const media = window.matchMedia(REDUCED_MOTION_QUERY);
@@ -75,6 +111,7 @@ export function Hero3D({ className, fallback, intensity = 1 }: Hero3DProps) {
 
     return () => {
       cancelled = true;
+      cancelWait();
       media.removeEventListener('change', onMediaChange);
     };
   }, []);
