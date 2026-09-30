@@ -169,7 +169,10 @@ export function Cursor({ hidden = false }: { hidden?: boolean }) {
           className="font-mono text-micro tracking-mono text-bg uppercase opacity-0 select-none"
         />
       </div>
-      <div data-cursor-dot className="absolute top-0 left-0 size-1.5 rounded-pill bg-fg opacity-0" />
+      <div
+        data-cursor-dot
+        className="absolute top-0 left-0 size-1.5 rounded-pill bg-fg opacity-0"
+      />
     </div>
   );
 }

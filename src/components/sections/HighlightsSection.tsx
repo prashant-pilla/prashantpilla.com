@@ -12,7 +12,8 @@ export function HighlightsSection() {
           eyebrow="01 — Highlights"
           title={
             <>
-              Things I have built, <span className="text-fg-muted italic">and a few I have lived.</span>
+              Things I have built,{' '}
+              <span className="text-fg-muted italic">and a few I have lived.</span>
             </>
           }
           lede="Builds, research, ventures, and life. Press f to cycle the filter."
