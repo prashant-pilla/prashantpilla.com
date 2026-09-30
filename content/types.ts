@@ -44,7 +44,7 @@ export interface Profile {
   name: string;
   fullName: string;
   role: string;
-  /** Short positioning line, e.g. "AI, Web3, Finance". */
+  /** Short positioning line, e.g. "AI systems for finance". */
   tagline: string;
   /** One reflective sentence under the hero. */
   bio: string;

@@ -10,7 +10,7 @@ export const ventures: Venture[] = [
   {
     name: 'ADIN',
     description:
-      'Autonomous Deal Investment Network by Tribute Labs. An AI-first, community-powered venture network where scouts source early-stage companies and AI agents run diligence.',
+      'Autonomous Deal Investment Network. An AI-first, community-powered venture network where scouts source early-stage companies and AI agents run diligence.',
     role: 'Scout',
     href: 'https://www.linkedin.com/company/adinonline',
     status: 'active',

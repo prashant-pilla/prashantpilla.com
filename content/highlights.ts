@@ -27,6 +27,16 @@ export const highlights: Highlight[] = [
     meta: 'Solana · May 2025',
   },
   {
+    id: 'sop-agent-harness',
+    kind: 'build',
+    title: 'An insurance-claims agent where the LLM cannot skip a step',
+    blurb:
+      'A deterministic controller owns the procedure; the model only extracts and phrases. Twelve test suites, CI, Docker.',
+    weight: 88,
+    href: 'https://github.com/prashant-pilla/insurance-sop-agent-harness',
+    meta: 'Python · CI · Docker',
+  },
+  {
     id: 'born-nz',
     kind: 'life',
     title: 'Born in New Zealand, raised in Hyderabad',
@@ -71,14 +81,6 @@ export const highlights: Highlight[] = [
     weight: 70,
     href: 'https://verify.skilljar.com/c/5ajaegdfz82d',
     meta: 'Jun 2026',
-  },
-  {
-    id: 'thirty-six-hours',
-    kind: 'build',
-    title: 'Deployed a crypto payments platform in 36 hours',
-    blurb: 'Wallet auth, real-time transactions, and an AI module, live before the weekend ended.',
-    weight: 65,
-    meta: 'Hackathon sprint',
   },
   {
     id: 'six-languages',
