@@ -43,7 +43,7 @@ export function WorkSection() {
 
                 <span className="md:col-span-6">
                   <span
-                    className="block font-serif text-display leading-none tracking-display"
+                    className="block font-serif text-title leading-none tracking-display text-balance"
                     data-preview-title
                   >
                     {p.title}
