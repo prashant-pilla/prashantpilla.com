@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { getProject, getProjectSlugs, getProjects } from '@/lib/content';
 import { Mdx } from '@/lib/mdx';
 import { padIndex } from '@/lib/site';
+import { graph, projectJsonLd } from '@/lib/jsonld';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { ButtonLink } from '@/components/ui/Button';
 import { Tag } from '@/components/ui/Tag';
@@ -55,6 +57,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
   return (
     <article className="px-page pb-section" data-case-study={project.slug}>
+      <JsonLd data={graph([projectJsonLd(project)])} />
       <div className="mx-auto max-w-(--content-max)">
         <PageHeader
           eyebrow={`Work · ${padIndex(index + 1)} / ${padIndex(all.length)} · ${project.year}`}

@@ -12,6 +12,8 @@ export const serif = Instrument_Serif({
   weight: '400',
   style: ['normal', 'italic'],
   display: 'swap',
+  preload: true,
+  adjustFontFallback: true,
 });
 
 export const sans = Geist({
