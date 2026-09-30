@@ -6,6 +6,8 @@ import { formatDate } from '@/lib/site';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { Tag } from '@/components/ui/Tag';
 import { ButtonLink } from '@/components/ui/Button';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { graph, postJsonLd } from '@/lib/jsonld';
 
 interface Params {
   slug: string;
@@ -53,6 +55,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
 
   return (
     <article className="px-page pb-section" data-post={post.slug}>
+      <JsonLd data={graph([postJsonLd(post)])} />
       <div className="mx-auto max-w-(--content-max)">
         <PageHeader
           eyebrow={`Writing · ${formatDate(post.date)} · ${post.readingTime} min read`}
@@ -94,7 +97,7 @@ function ComingSoon() {
               First post, <span className="text-fg-muted italic">still cooking.</span>
             </span>
           }
-          lede="Nothing is published here yet. The research and external writing are on the index."
+          lede="Nothing is published here yet. The research is on the index."
           back={{ href: '/writing', label: 'Writing' }}
         >
           <div className="mt-8">

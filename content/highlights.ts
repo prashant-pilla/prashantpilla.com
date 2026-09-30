@@ -73,12 +73,14 @@ export const highlights: Highlight[] = [
     meta: 'Jun 2026',
   },
   {
-    id: 'thirty-six-hours',
+    id: 'sop-agent-harness',
     kind: 'build',
-    title: 'Deployed a crypto payments platform in 36 hours',
-    blurb: 'Wallet auth, real-time transactions, and an AI module, live before the weekend ended.',
-    weight: 65,
-    meta: 'Hackathon sprint',
+    title: 'An insurance-claims agent where the LLM cannot skip a step',
+    blurb:
+      'A deterministic controller owns the procedure; the model only extracts and phrases. Twelve test suites, CI, Docker.',
+    weight: 88,
+    href: 'https://github.com/prashant-pilla/insurance-sop-agent-harness',
+    meta: 'Python · FastAPI · Sep 2026',
   },
   {
     id: 'six-languages',

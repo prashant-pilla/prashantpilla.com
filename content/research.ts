@@ -23,14 +23,8 @@ export const research: ResearchItem[] = [
       { label: 'ARIMA MAE / RMSE', value: '462.1 / 614' },
     ],
   },
-  {
-    id: 'medium-profile',
-    title: 'Writing on Medium',
-    venue: 'Medium',
-    href: 'https://medium.com/@pilla146',
-    // Profile link rather than a specific post; no date to claim.
-    summary: 'Occasional longer-form notes on building with LLMs, Web3, and finance.',
-  },
+  // Medium is intentionally not listed until a post worth linking exists
+  // there. Add a `venue: 'Medium'` item pointing at the specific post then.
 ];
 
 /** Dated items first (newest first), undated items last. */

@@ -8,8 +8,7 @@ import { Tag } from '@/components/ui/Tag';
 
 export const metadata: Metadata = {
   title: 'Writing',
-  description:
-    'Notes on building with LLMs, Web3, and finance. Research on arXiv, essays on Medium.',
+  description: 'Notes on building AI systems for finance. Research on arXiv.',
   alternates: { canonical: '/writing' },
 };
 
@@ -33,8 +32,8 @@ export default function WritingPage() {
           }
           lede={
             posts.length
-              ? 'Longer-form notes on building with LLMs, Web3, and finance.'
-              : 'The first post lands when it is worth your time. Until then, the research and external writing below is where I have already said something.'
+              ? 'Longer-form notes on building AI systems for finance.'
+              : 'The first post lands when it is worth your time. Until then, the research below is where I have already said something.'
           }
         />
 
