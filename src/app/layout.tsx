@@ -4,13 +4,15 @@ import { Grain } from '@/components/experience/Grain';
 import { profile } from '@content/profile';
 import { DEFAULT_THEME, THEME_SWATCHES } from '@/lib/theme';
 import { SITE_URL } from '@/lib/site';
+import { graph, personJsonLd, researchJsonLd, websiteJsonLd } from '@/lib/jsonld';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { Nav } from '@/components/layout/Nav';
 import { Footer } from '@/components/layout/Footer';
 import { Providers } from '@/app/providers';
 import './globals.css';
 
 const SITE_TITLE = `${profile.name} — ${profile.role}`;
-const SITE_DESCRIPTION = `${profile.role} in ${profile.location.city} working across ${profile.tagline}. ${profile.bio}`;
+const SITE_DESCRIPTION = `${profile.role} in ${profile.location.city} building ${profile.tagline}. ${profile.bio}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -23,10 +25,13 @@ export const metadata: Metadata = {
   authors: [{ name: profile.fullName, url: SITE_URL }],
   creator: profile.fullName,
   keywords: [
+    profile.name,
+    profile.fullName,
     profile.role,
-    ...profile.tagline.split(',').map((s) => s.trim()),
-    'LLM',
-    'Solana',
+    'AI Engineer',
+    profile.tagline,
+    'LLM agents',
+    'fintech',
     profile.location.city,
   ],
   alternates: { canonical: '/' },
@@ -45,6 +50,8 @@ export const metadata: Metadata = {
     creator: profile.socials.find((s) => s.platform === 'x')?.handle,
   },
   robots: { index: true, follow: true },
+  // verification.google and verification.other['msvalidate.01'] land once
+  // Search Console / Bing Webmaster codes exist.
 };
 
 /* Browser chrome colour for the default theme before hydration; the theme
@@ -59,6 +66,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-theme={DEFAULT_THEME} className={fontClassNames} suppressHydrationWarning>
       <body className="bg-bg font-sans text-fg antialiased">
+        <JsonLd data={graph([personJsonLd(), websiteJsonLd(), ...researchJsonLd()])} />
         <Providers>
           <Grain />
           <Nav />
