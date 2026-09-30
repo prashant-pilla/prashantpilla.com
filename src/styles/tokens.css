@@ -34,7 +34,7 @@
 
   /* --- Type scale (fluid; rem + vw) ----------------------------------
    * Utilities: text-micro, text-label, text-body, text-lead,
-   *            text-h3, text-h2, text-h1, text-display, text-hero  */
+   *            text-h3, text-h2, text-h1, text-title, text-display, text-hero  */
   --text-micro: 0.6875rem;
   --text-micro--line-height: 1.4;
   --text-micro--letter-spacing: 0.08em;
@@ -53,6 +53,11 @@
   --text-h1: clamp(2.5rem, 1.8rem + 3.2vw, 4.5rem);
   --text-h1--line-height: 1.02;
   --text-h1--letter-spacing: -0.02em;
+  /* List titles that share a row with other columns (Selected Work). Sized
+   * so a 26-character title holds to two lines in a half-width column. */
+  --text-title: clamp(2.75rem, 1.5rem + 4vw, 6.5rem);
+  --text-title--line-height: 0.95;
+  --text-title--letter-spacing: -0.03em;
   --text-display: clamp(3.5rem, 2rem + 6vw, 8rem);
   --text-display--line-height: 0.95;
   --text-display--letter-spacing: -0.03em;

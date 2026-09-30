@@ -37,7 +37,7 @@ export function GradientTile({ seed = 0, cover, alt = '', className }: GradientT
           alt={alt}
           fill
           sizes="(min-width: 768px) 40vw, 90vw"
-          className="object-cover"
+          className="object-cover object-top"
         />
       ) : null}
     </div>
