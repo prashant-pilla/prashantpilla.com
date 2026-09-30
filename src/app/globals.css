@@ -79,11 +79,15 @@
   --pp-dock-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   /* switcher height (dot 24px + padding 12px) + 8px gap */
   --pp-dock-stack: calc(var(--pp-dock-bottom) + 2.75rem);
+  /* Bottom padding the footer needs so its last row clears the dock. */
+  --pp-dock-clear: calc(var(--pp-dock-stack) + 0.75rem);
 }
 @media (pointer: coarse) {
   :root {
     /* switcher swatches grow to 36px hit areas on touch: 48px + 8px gap */
     --pp-dock-stack: calc(var(--pp-dock-bottom) + 3.5rem);
+    /* PaletteTrigger (36px) stacks above the switcher on touch. */
+    --pp-dock-clear: calc(var(--pp-dock-stack) + 3rem);
   }
 }
 
@@ -197,6 +201,13 @@ html.pp-cursor * {
 }
 .pp-word {
   display: inline-block;
+}
+/* While a line is animating inside its mask, give descenders room: the
+ * mask is only as tall as the line box, which is under 1em for display
+ * sizes. The negative margin keeps the line rhythm unchanged. */
+.pp-line-mask {
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
 }
 
 @media (prefers-reduced-motion: reduce) {

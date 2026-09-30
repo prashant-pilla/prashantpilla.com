@@ -55,7 +55,7 @@ function showNow(els: HTMLElement[]) {
 }
 
 function revealHeading(el: HTMLElement) {
-  SplitText.create(el, {
+  const split = SplitText.create(el, {
     type: 'lines',
     mask: 'lines',
     linesClass: 'pp-line',
@@ -74,6 +74,13 @@ function revealHeading(el: HTMLElement) {
         scrollTrigger: { trigger: el, start: START, once: true },
         onStart: () => {
           el.dataset.revealed = '1';
+        },
+        // Put the plain text back once the lines have landed. The masks
+        // are `overflow: clip` boxes the height of the line box, and with
+        // display line-heights under 1 they cut off descenders if left in
+        // place. Reverting also drops the autoSplit resize listener.
+        onComplete: () => {
+          split.revert();
         },
       });
     },

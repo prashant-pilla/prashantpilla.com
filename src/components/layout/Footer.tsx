@@ -13,7 +13,12 @@ export function Footer() {
   const socials = profile.socials.filter((s) => s.platform !== 'email');
 
   return (
-    <footer id="contact" className="relative border-t border-border px-page pt-section pb-8">
+    // Bottom padding clears the fixed dock (theme switcher, touch menu) so the
+    // copyright row and shortcut legend are never covered when scrolled to the end.
+    <footer
+      id="contact"
+      className="relative border-t border-border px-page pt-section pb-(--pp-dock-clear)"
+    >
       <div className="mx-auto max-w-(--content-max)">
         <p className="mb-6 font-mono text-micro tracking-mono text-fg-muted uppercase" data-reveal>
           Contact

@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { fontClassNames } from './fonts';
 import { Grain } from '@/components/experience/Grain';
 import { profile } from '@content/profile';
-import { DEFAULT_THEME, THEME_SWATCHES } from '@/lib/theme';
+import { DEFAULT_THEME, LIGHT_DEFAULT_THEME, THEME_SWATCHES } from '@/lib/theme';
 import { SITE_URL } from '@/lib/site';
 import { graph, personJsonLd, researchJsonLd, websiteJsonLd } from '@/lib/jsonld';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -54,10 +54,14 @@ export const metadata: Metadata = {
   // Search Console / Bing Webmaster codes exist.
 };
 
-/* Browser chrome colour for the default theme before hydration; the theme
- * engine (`syncThemeColorMeta`) rewrites this tag as the visitor switches. */
+/* Browser chrome colour per device scheme before hydration (matches the
+ * bootstrap script's defaults); the theme engine (`syncThemeColorMeta`)
+ * rewrites these tags as the visitor switches. */
 export const viewport: Viewport = {
-  themeColor: THEME_SWATCHES[DEFAULT_THEME].bg,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: THEME_SWATCHES[LIGHT_DEFAULT_THEME].bg },
+    { media: '(prefers-color-scheme: dark)', color: THEME_SWATCHES[DEFAULT_THEME].bg },
+  ],
   width: 'device-width',
   initialScale: 1,
 };
