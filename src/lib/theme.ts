@@ -19,7 +19,10 @@ export const THEMES = ['graphite', 'ember', 'sage', 'ultraviolet', 'paper'] as c
 
 export type ThemeId = (typeof THEMES)[number];
 
+/** Server-rendered default and the dark-scheme default. */
 export const DEFAULT_THEME: ThemeId = 'graphite';
+/** Default for visitors whose device prefers a light color scheme. */
+export const LIGHT_DEFAULT_THEME: ThemeId = 'paper';
 
 /** localStorage key holding the visitor's chosen theme id. */
 export const THEME_STORAGE_KEY = 'pp-theme';
@@ -138,7 +141,14 @@ export function syncThemeColorMeta(): void {
  * <ThemeScript/> so it runs during HTML parsing, before hydration and
  * before any content paints, eliminating the theme flash. Kept as a plain
  * string so it ships without a module wrapper or React runtime.
+ *
+ * Order: a theme the visitor chose (localStorage) wins; otherwise a device
+ * that prefers a light scheme gets LIGHT_DEFAULT_THEME; otherwise the
+ * server-rendered DEFAULT_THEME stands. Nothing is persisted here, so the
+ * device preference keeps being honoured until the visitor picks a theme.
  */
-export const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem(${JSON.stringify(
+export const THEME_INIT_SCRIPT = `(function(){var d=document.documentElement;try{var t=localStorage.getItem(${JSON.stringify(
   THEME_STORAGE_KEY,
-)});if(t&&${JSON.stringify([...THEMES])}.indexOf(t)>-1){document.documentElement.setAttribute('data-theme',t)}}catch(e){}})();`;
+)});if(t&&${JSON.stringify([...THEMES])}.indexOf(t)>-1){d.setAttribute('data-theme',t);return}}catch(e){}try{if(matchMedia('(prefers-color-scheme: light)').matches){d.setAttribute('data-theme',${JSON.stringify(
+  LIGHT_DEFAULT_THEME,
+)})}}catch(e){}})();`;
