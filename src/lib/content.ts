@@ -125,6 +125,7 @@ function parseProject(file: string): Project {
     stack: strList(file, data, 'stack'),
     links,
     cover: str(file, data, 'cover', false) || undefined,
+    tagline: str(file, data, 'tagline', false) || undefined,
     featured: bool(file, data, 'featured', false),
     order: num(file, data, 'order'),
   };

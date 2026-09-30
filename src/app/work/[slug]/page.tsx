@@ -10,6 +10,7 @@ import { PageHeader } from '@/components/ui/PageHeader';
 import { ButtonLink } from '@/components/ui/Button';
 import { Tag } from '@/components/ui/Tag';
 import { GradientTile } from '@/components/ui/GradientTile';
+import { ProjectPoster } from '@/components/ui/ProjectPoster';
 import { Arrow } from '@/components/ui/Arrow';
 
 interface Params {
@@ -95,12 +96,22 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           ) : null}
         </PageHeader>
 
-        <GradientTile
-          seed={index + 1}
-          cover={project.cover}
-          alt={project.cover ? `${project.title} cover` : ''}
-          className="aspect-[21/9] w-full rounded-lg border border-border"
-        />
+        {project.cover ? (
+          <GradientTile
+            seed={index + 1}
+            cover={project.cover}
+            alt={`${project.title} screenshot`}
+            className="aspect-[21/9] w-full rounded-lg border border-border"
+          />
+        ) : (
+          <ProjectPoster
+            title={project.title}
+            tagline={project.tagline}
+            index={index + 1}
+            year={project.year}
+            className="aspect-[21/9] w-full rounded-lg border border-border"
+          />
+        )}
 
         <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-12 md:gap-gutter">
           <aside className="hidden md:col-span-3 md:block">
