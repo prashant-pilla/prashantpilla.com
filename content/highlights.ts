@@ -68,7 +68,8 @@ export const highlights: Highlight[] = [
     id: 'yoga-17',
     kind: 'life',
     title: 'Certified yoga instructor at seventeen',
-    blurb: 'Sivananda Ashram Yoga Camp, Quebec. One of the youngest internationally certified.',
+    blurb:
+      'Sivananda ashram in the Himalayas, where the lineage began. One of the youngest internationally certified.',
     weight: 75,
     meta: 'Jul 2022',
   },
