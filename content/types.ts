@@ -110,6 +110,8 @@ export interface ProjectFrontmatter {
   links: ProjectLinks;
   /** Path under /public or absolute URL. */
   cover?: string;
+  /** Short phrase (3–5 words) for the poster tile; falls back to the title. */
+  tagline?: string;
   featured: boolean;
   /** Ascending sort key for the Selected Work list. */
   order: number;

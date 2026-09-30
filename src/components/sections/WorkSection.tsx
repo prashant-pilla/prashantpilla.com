@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { getFeaturedProjects, getProjects } from '@/lib/content';
 import { padIndex } from '@/lib/site';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { GradientTile } from '@/components/ui/GradientTile';
+import { ProjectPoster } from '@/components/ui/ProjectPoster';
 import { Arrow } from '@/components/ui/Arrow';
 
 /**
@@ -74,10 +74,11 @@ export function WorkSection() {
                 aria-hidden="true"
                 className="pointer-events-none absolute top-0 left-0 hidden w-[22rem] md:block md:opacity-0"
               >
-                <GradientTile
-                  seed={i + 1}
-                  cover={p.cover}
-                  alt=""
+                <ProjectPoster
+                  title={p.title}
+                  tagline={p.tagline}
+                  index={i + 1}
+                  year={p.year}
                   className="aspect-[4/3] rounded-lg border border-border"
                 />
               </div>
