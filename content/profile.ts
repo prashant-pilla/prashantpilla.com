@@ -9,7 +9,7 @@ export const profile: Profile = {
   about: [
     'I build AI systems that have to survive contact with real money. Recent work includes production AI for institutional investors at Tribute Labs in New York, scouting early-stage companies for ADIN, and a run of open-source systems: an insurance-claims agent harness where a deterministic controller enforces procedure, Citework for grounded investment memos, and open-verse, an arena for LLM trading agents.',
     'I was born in New Zealand and grew up in Hyderabad. Somewhere between the two I picked up a habit of paying attention to how people from different places think, which is probably why I ended up caring more about who a system is for than what it is made of.',
-    'At seventeen I became a certified yoga instructor at an ashram in Quebec. It taught me that discipline is mostly about showing up quietly and often, and that is still how I approach code, research, and the occasional 36-hour hackathon.',
+    'At seventeen I became a certified yoga instructor at a Sivananda ashram in the Himalayas. It taught me that discipline is mostly about showing up quietly and often, and that is still how I approach code, research, and the occasional 36-hour hackathon.',
     'I studied computer science at the University of Minnesota, where I published a deep learning paper on forecasting the S&P 500 and spent too many evenings at the Blockchain Club. I am happiest when a problem sits between engineering, product, and the people who have to trust the result.',
   ],
   location: {
