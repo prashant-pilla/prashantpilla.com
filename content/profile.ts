@@ -4,10 +4,10 @@ export const profile: Profile = {
   name: 'Prashant Pilla',
   fullName: 'Prashant Reddy Pilla',
   role: 'Software Engineer',
-  tagline: 'AI, Web3, Finance',
+  tagline: 'AI systems for finance',
   bio: 'I like building systems where new technology has to survive contact with real money and real people.',
   about: [
-    'I build at the intersection of AI, Web3, and finance. Most of my days are spent at Tribute Labs in New York, shipping production AI for institutional investors, and scouting early-stage companies for ADIN, an autonomous deal network the team is building on top of that work.',
+    'I build AI systems that have to survive contact with real money. Recent work includes production AI for institutional investors at Tribute Labs in New York, scouting early-stage companies for ADIN, and a run of open-source systems: an insurance-claims agent harness where a deterministic controller enforces procedure, Citework for grounded investment memos, and open-verse, an arena for LLM trading agents.',
     'I was born in New Zealand and grew up in Hyderabad. Somewhere between the two I picked up a habit of paying attention to how people from different places think, which is probably why I ended up caring more about who a system is for than what it is made of.',
     'At seventeen I became a certified yoga instructor at an ashram in Quebec. It taught me that discipline is mostly about showing up quietly and often, and that is still how I approach code, research, and the occasional 36-hour hackathon.',
     'I studied computer science at the University of Minnesota, where I published a deep learning paper on forecasting the S&P 500 and spent too many evenings at the Blockchain Club. I am happiest when a problem sits between engineering, product, and the people who have to trust the result.',
@@ -22,14 +22,8 @@ export const profile: Profile = {
   languages: ['English', 'Telugu', 'Hindi', 'Urdu', 'Spanish', 'French'],
   facts: [
     {
-      label: 'Currently at',
-      value: 'Tribute Labs, Software Engineer',
-      href: 'https://www.linkedin.com/company/tributelabs',
-    },
-    {
-      label: 'Also',
-      value: 'Scout at ADIN',
-      href: 'https://www.linkedin.com/company/adinonline',
+      label: 'Focus',
+      value: 'AI systems for finance: agents, grounded analysis, trading infrastructure',
     },
     {
       label: 'Education',
@@ -68,12 +62,7 @@ export const profile: Profile = {
       handle: '@abstruderex',
       href: 'https://x.com/abstruderex',
     },
-    {
-      platform: 'medium',
-      label: 'Medium',
-      handle: '@pilla146',
-      href: 'https://medium.com/@pilla146',
-    },
+    // Medium returns when the first real post is imported.
     {
       platform: 'email',
       label: 'Email',
@@ -82,14 +71,8 @@ export const profile: Profile = {
     },
   ],
   email: 'pilla146@umn.edu',
-  // The PDF is not committed yet. Drop it at public/resume.pdf and this link works.
+  // Interim PDF from the GitHub profile repo until an updated resume lands.
   resumePath: '/resume.pdf',
   greetings: ['Hello', 'నమస్కారం', 'नमस्ते', 'السلام علیکم', 'Hola', 'Bonjour'],
-  openTo: [
-    'AI Engineering',
-    'Software Engineering',
-    'Forward Deployed Engineering',
-    'Solutions Engineering',
-    'Developer Infrastructure',
-  ],
+  openTo: ['AI Engineering', 'Forward Deployed Engineering', 'Software Engineering'],
 };

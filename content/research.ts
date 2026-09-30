@@ -3,6 +3,8 @@ import type { ResearchItem } from './types';
 /**
  * Published research and external writing. Featured on /writing until
  * the first MDX post lands in content/writing/.
+ *
+ * The Medium profile card returns when the first real post is imported.
  */
 export const research: ResearchItem[] = [
   {
@@ -22,14 +24,6 @@ export const research: ResearchItem[] = [
       { label: 'ARIMA accuracy', value: '89.8%' },
       { label: 'ARIMA MAE / RMSE', value: '462.1 / 614' },
     ],
-  },
-  {
-    id: 'medium-profile',
-    title: 'Writing on Medium',
-    venue: 'Medium',
-    href: 'https://medium.com/@pilla146',
-    // Profile link rather than a specific post; no date to claim.
-    summary: 'Occasional longer-form notes on building with LLMs, Web3, and finance.',
   },
 ];
 
