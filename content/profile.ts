@@ -66,11 +66,11 @@ export const profile: Profile = {
     {
       platform: 'email',
       label: 'Email',
-      handle: 'pilla146@umn.edu',
-      href: 'mailto:pilla146@umn.edu',
+      handle: 'hello@prashantpilla.com',
+      href: 'mailto:hello@prashantpilla.com',
     },
   ],
-  email: 'pilla146@umn.edu',
+  email: 'hello@prashantpilla.com',
   // Interim PDF from the GitHub profile repo until an updated resume lands.
   resumePath: '/resume.pdf',
   greetings: ['Hello', 'నమస్కారం', 'नमस्ते', 'السلام علیکم', 'Hola', 'Bonjour'],
